@@ -20,8 +20,10 @@ function csvJSON(csv) {
        btnDisabled = 'disabled';
     }
     for (var i = 0; i < data.length; i++) {
-      element.innerHTML += '<label class="btn slcc3 btn-sm m-2" id="' + data[i]+ '">'
-        + '<input type="radio" '+btnDisabled+' id="' + data[i] + '" name="' + step + '" class="btn" onchange="fetchPayRate()">' + data[i]
+      let elId = data[i]
+      elId = elId.replaceAll(/[& \.]/g,'')//replace periods, & and spaces
+      element.innerHTML += '<label class="btn slcc3 btn-sm m-2" id="lbl_' + elId + '">'
+        + '<input type="radio" '+btnDisabled+' id="' + elId + '" name="' + step + '" class="btn" onchange="fetchPayRate()">' + data[i]
         + '</label><br />';
     }
   }
@@ -49,6 +51,9 @@ function csvJSON(csv) {
     }
     degBtns = [...new Set(degBtns.map(x => x))];
     crla = [...new Set(crla.map(x => x))];
+    console.log(degBtns)
+    console.log(crla)
+    console.log(data)
     var element = document.getElementById("step1");
     buttonCreator(crla, "step1", element);
     element = document.getElementById("step2");
@@ -75,7 +80,7 @@ function csvJSON(csv) {
       return response.text();
     }).then(function (data) {
       var payData = JSON.parse(csvJSON(data));
-      //console.log(crla, degree, years);
+      console.log(crla, degree, years);
       payData = payData.filter(val => { return val.Crla === crla });
       if (degree !== 1) {
         payData = payData.filter(val => { return val.Degree === degree });
@@ -102,7 +107,7 @@ function csvJSON(csv) {
       }
       let maxPay = Math.max.apply(null, amnts);
       let minPay = Math.min.apply(null, amnts);
-      //console.log(payData);
+      console.log(payData);
       //Write on to document
       if (maxPay === minPay) {
         document.getElementById("middle").innerHTML = '$' + payData[0]["PayRate"];
@@ -117,8 +122,9 @@ function csvJSON(csv) {
         document.getElementById("label").children[1].classList.add("label");
       }
       //Remove "In Progress" from step 2
-      if (crla === "III") {
-        document.getElementById("step2").children[0].classList.add("label");
+      if (crla === "None") {
+        //document.getElementById("step2").children[0].classList.add("disabled");
+        document.getElementById("myBtn").disabled = true;
         document.getElementById("cert3").classList.remove("label");
       }
       //Loop through step 2 and enable elements
