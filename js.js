@@ -51,9 +51,9 @@ function csvJSON(csv) {
     }
     degBtns = [...new Set(degBtns.map(x => x))];
     crla = [...new Set(crla.map(x => x))];
-    console.log(degBtns)
-    console.log(crla)
-    console.log(data)
+    ///console.log(degBtns)
+    //console.log(crla)
+    //console.log(data)
     var element = document.getElementById("step1");
     buttonCreator(crla, "step1", element);
     element = document.getElementById("step2");
@@ -123,7 +123,7 @@ function csvJSON(csv) {
       }
       //Remove "In Progress" from step 2
       if (crla === "None") {
-        //document.getElementById("step2").children[0].classList.add("disabled");
+        document.getElementById("step2").children[0].classList.add("disabled");
         document.getElementById("myBtn").disabled = true;
         document.getElementById("cert3").classList.remove("label");
       }
