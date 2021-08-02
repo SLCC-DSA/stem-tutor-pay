@@ -29,8 +29,8 @@
 .slcc1-font {
   color: #0078c8;
 }
-button:disabled,
-button[disabled]{
+input:disabled,
+input[disabled]{
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;

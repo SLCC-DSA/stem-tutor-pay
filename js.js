@@ -16,14 +16,17 @@ function csvJSON(csv) {
   //Write Buttons
   function buttonCreator(data, step, element) {
     let btnDisabled = '';  
-    if(step === "step2"){
+    if(step !== "step1"){
        btnDisabled = 'disabled';
     }
     for (var i = 0; i < data.length; i++) {
       let elId = data[i]
       elId = elId.replaceAll(/[& \.]/g,'')//replace periods, & and spaces
-      element.innerHTML += '<label class="btn slcc3 btn-sm m-2" id="lbl_' + elId + '">'
-        + '<input type="radio" '+btnDisabled+' id="' + elId + '" name="' + step + '" class="btn" onchange="fetchPayRate()">' + data[i]
+      element.innerHTML += '<label class="btn slcc3 btn-sm m-2" id="lbl_' + elId.replaceAll(/[<]/g,'L')
+        .replaceAll(/[>]/g,'M')
+        .replaceAll(/[≤]/g,'LT')
+        .replaceAll(/[≥]/g,'MT') + '">'
+        + '<input type="radio" '+btnDisabled+' id="btn_' + elId + '" name="' + step + '" class="btn" onchange="fetchPayRate()" value="'+elId+'">' + data[i]
         + '</label><br />';
     }
   }
@@ -42,54 +45,52 @@ function csvJSON(csv) {
     for (var a = 0; a < data.length; a++) {
       crla.push(data[a].Crla);
     }
-    data = data.sort(function (a, b) {
-      return a.Degree_Sort - b.Degree_Sort;
-    })
-    let degBtns = [];
-    for (var e = 0; e < data.length; e++) {
-      degBtns.push(data[e].Degree);
-    }
-    degBtns = [...new Set(degBtns.map(x => x))];
     crla = [...new Set(crla.map(x => x))];
-    ///console.log(degBtns)
-    //console.log(crla)
-    //console.log(data)
     var element = document.getElementById("step1");
     buttonCreator(crla, "step1", element);
-    element = document.getElementById("step2");
-    buttonCreator(degBtns, "step2", element);
+    window.sessionStorage.payData = JSON.stringify(data);
   });
   //Create a function that will be called onChange. Notice the on change property on each input type above. 
   function fetchPayRate() {
+    let payRates = JSON.parse(window.sessionStorage.payData);
     let x = document.getElementById('form');
     let radOn = new Array;
     for (let i = 0; i < x.length; i++) {
       if (x.elements[i].checked === true) {
-        //radOn.push(x.elements[i].id);
         let stepGroup = x.elements[i].name;
-        radOn[stepGroup] = x.elements[i].id;
+        radOn[stepGroup] = x.elements[i].value;
       }
     }
-    //declare paramets that will be used in fetch... Notice that this is ternary conditional declaration
+    //what buttons are one, this is ternary conditional declaration
     let crla = radOn["step1"] === undefined ? 1 : radOn["step1"];
     let degree = radOn["step2"] === undefined ? 1 : radOn["step2"];
     let years = radOn["step3"] === undefined ? 1 : radOn["step3"];
-    //Construct URL and then fecth.. The fetch will write to spans with the min and max ids. 
-    //let payUrl = "https://apex.oracle.com/pls/apex/leonelrest/stempay/raterange/" + crla + "/" + degree + "/" + years;
-    fetch(gsheet + sortedSheet).then(function (response) {
-      return response.text();
-    }).then(function (data) {
-      var payData = JSON.parse(csvJSON(data));
       console.log(crla, degree, years);
-      payData = payData.filter(val => { return val.Crla === crla });
-      if (degree !== 1) {
-        payData = payData.filter(val => { return val.Degree === degree });
+      payRates = payRates.filter(val => { return val.Crla.replaceAll(/[& \.]/g,'') === crla });
+      if (degree !== 1 && crla !== "None") {
+        payRates = payRates.filter(val => { return val.Degree.replaceAll(/[& \.]/g,'') === degree });
       }
       if (years !== 1) {
-        payData = payData.filter(val => { return val.Years === years });
+        payRates = payRates.filter(val => { return val.Years.replaceAll(/[& \.]/g,'') === years });
+      }
+      console.log(payRates)
+      //console.log(payRates)
+      //Write Step 2
+      let step2 = payRates.sort(function(a,b){
+        return a.Degree_Sort - b.Degree_Sort
+      })
+      let degreeButtons = []
+      for(let d = 0;d < step2.length; d++){
+        degreeButtons.push(step2[d].Degree)
+      }
+      degreeButtons = [...new Set(degreeButtons.map(x=>x))]
+      let step2El = document.getElementById("step2")
+      if(degree === 1 || crla === "None") {
+        step2El.innerHTML = ''
+        buttonCreator(degreeButtons,"step2",step2El)
       }
       //Write Step 3
-      let step3 = payData.sort(function (a, b) {
+      let step3 = payRates.sort(function (a, b) {
         return a.Years_Sort - b.Years_Sort;
       })
       let yearsButtons = [];
@@ -100,17 +101,17 @@ function csvJSON(csv) {
       var step3El = document.getElementById("step3");
       step3El.innerHTML = '';
       buttonCreator(yearsButtons, "step3", step3El);
-      let max = payData.length - 1;
+
+      let max = payRates.length - 1;
       let amnts = new Array();
-      for (var z = 0; z < payData.length; z++) {
-        amnts.push(parseFloat(payData[z]["PayRate"]));
+      for (var z = 0; z < payRates.length; z++) {
+        amnts.push(parseFloat(payRates[z]["PayRate"]));
       }
       let maxPay = Math.max.apply(null, amnts);
       let minPay = Math.min.apply(null, amnts);
-      console.log(payData);
       //Write on to document
       if (maxPay === minPay) {
-        document.getElementById("middle").innerHTML = '$' + payData[0]["PayRate"];
+        document.getElementById("middle").innerHTML = '$' + payRates[0]["PayRate"];
         document.getElementById("label").children[1].classList.remove("label");
         document.getElementById("label").children[0].classList.add("label");
         document.getElementById("label").children[2].classList.add("label");
@@ -121,17 +122,41 @@ function csvJSON(csv) {
         document.getElementById("label").children[2].classList.remove("label");
         document.getElementById("label").children[1].classList.add("label");
       }
-      //Remove "In Progress" from step 2
-      if (crla === "None") {
-        document.getElementById("step2").children[0].classList.add("disabled");
-        document.getElementById("myBtn").disabled = true;
-        document.getElementById("cert3").classList.remove("label");
-      }
-      //Loop through step 2 and enable elements
-      if (crla != 1) {
-        document.getElementsByName("step2").forEach(element => {
-            element.disabled = false;
+      //Disable and enable buttons on certain selections
+      if(crla !== 1){
+        let inputs = document.querySelectorAll("input[name='step2']")
+        inputs.forEach(key => {
+          key.disabled = false
         })
       }
-    })
+      if(degree !== 1){
+        let inputs = document.querySelectorAll("input[name='step3']")
+        inputs.forEach(key => {
+          key.disabled = false
+        })
+      }
+      let s2numOpts = document.querySelector("#step2").childElementCount
+      let s3numOpts = document.querySelector("#step3").childElementCount
+      //When none is selected then show only one option 
+      if (crla === "None" || s2numOpts <= 2) {
+        let elId = payRates[0].Degree.replaceAll(/[& \.]/g,'')
+        document.querySelector('#lbl_'+elId).classList.add('active')
+        document.querySelector("#btn_"+elId).disabled = true;
+        if(crla === "None" || s3numOpts <= 2){
+          elId = payRates[0].Years.replaceAll(/[& \.]/g,'').replaceAll(/[<]/g,'L')
+          .replaceAll(/[>]/g,'M')
+          .replaceAll(/[≤]/g,'LT')
+          .replaceAll(/[≥]/g,'MT')
+          document.querySelector('#lbl_'+elId).classList.add('active')
+          document.querySelector("#btn_"+elId).disabled = true
+        }
+      }
+      if(crla === "None" || s3numOpts <= 2){
+        elId = payRates[0].Years.replaceAll(/[& \.]/g,'').replaceAll(/[<]/g,'L')
+        .replaceAll(/[>]/g,'M')
+        .replaceAll(/[≤]/g,'LT')
+        .replaceAll(/[≥]/g,'MT')
+        document.querySelector('#lbl_'+elId).classList.add('active')
+        document.querySelector("#btn_"+elId).disabled = true
+      }
   }
