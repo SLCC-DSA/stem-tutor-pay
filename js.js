@@ -39,14 +39,11 @@ function buttonCreator(data, step, element) {
   }
 }
 //Declare urls that will be used. 
-let gsheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQwlUFekIfqsyJoZHBo-uRMkWK7AR1L5iq59UrRslAN9ExoYhcZJH36pn2aCMYtJd-YwuhtnEXhIPfT/pub?";
-let sortedSheet = 'gid=91226759&single=true&output=csv';//Sheet with sorters
-let gitRaw = 'https://raw.githubusercontent.com/SLCC-DSA/stem-tutor-pay/master/pay_rate_data.csv'
+let gitRaw = 'https://raw.githubusercontent.com/SLCC-DSA/stem-tutor-pay/master/pay_rate_data.json'
 //First for step 1, fetch to get the buttons names and render them with the for loop
-fetch("./pay_rate_data.json").then(function (response) {
+fetch(gitRaw).then(function (response) {
   return response.json();
 }).then(function (data) {
-  console.log(data)
   //var data = JSON.parse(csvJSON(data));
   data = data.sort(function (a, b) {
     return a.Cral_Sort - b.Cral_Sort;
@@ -86,7 +83,7 @@ function fetchPayRate() {
   let years = radOn["step3"] === undefined ? 1 : radOn["step3"];
   //Construct URL and then fecth.. The fetch will write to spans with the min and max ids. 
   //let payUrl = "https://apex.oracle.com/pls/apex/leonelrest/stempay/raterange/" + crla + "/" + degree + "/" + years;
-  fetch("./pay_rate_data.json").then(function (response) {
+  fetch(gitRaw).then(function (response) {
     return response.json();
   }).then(function (data) {
     var payData = data//JSON.parse(csvJSON(data));
