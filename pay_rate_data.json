@@ -4,7 +4,7 @@
       "Cral_Sort": 1,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "Y ? 0",
+      "Years": "Y ≥ 0",
       "Years_Sort": 1,
       "PayRate": 12.29
     },
@@ -13,7 +13,7 @@
       "Cral_Sort": 1,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "Y ? 0",
+      "Years": "Y ≥ 0",
       "Years_Sort": 1,
       "PayRate": 12.59
     },
@@ -22,7 +22,7 @@
       "Cral_Sort": 1,
       "Degree": "B.S. & Up",
       "Degree_Sort": 3,
-      "Years": "Y ? 0",
+      "Years": "Y ≥ 0",
       "Years_Sort": 1,
       "PayRate": 13.38
     },
@@ -40,7 +40,7 @@
       "Cral_Sort": 2,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "2 ? Y < 4",
+      "Years": "2 ≤ Y < 4",
       "Years_Sort": 3,
       "PayRate": 13.76
     },
@@ -49,7 +49,7 @@
       "Cral_Sort": 2,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "4 ? Y < 6",
+      "Years": "4 ≤ Y < 6",
       "Years_Sort": 4,
       "PayRate": 14.71
     },
@@ -58,7 +58,7 @@
       "Cral_Sort": 2,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "Y ? 6",
+      "Years": "Y ≥ 6",
       "Years_Sort": 6,
       "PayRate": 15.14
     },
@@ -76,7 +76,7 @@
       "Cral_Sort": 2,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "2 ? Y < 4",
+      "Years": "2 ≤ Y < 4",
       "Years_Sort": 3,
       "PayRate": 14.71
     },
@@ -85,7 +85,7 @@
       "Cral_Sort": 2,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "4 ? Y < 6",
+      "Years": "4 ≤ Y < 6",
       "Years_Sort": 4,
       "PayRate": 15.14
     },
@@ -94,7 +94,7 @@
       "Cral_Sort": 2,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "Y ? 6",
+      "Years": "Y ≥ 6",
       "Years_Sort": 6,
       "PayRate": 15.56
     },
@@ -112,7 +112,7 @@
       "Cral_Sort": 2,
       "Degree": "B.S. & Up",
       "Degree_Sort": 3,
-      "Years": "2 ? Y < 4",
+      "Years": "2 ≤ Y < 4",
       "Years_Sort": 3,
       "PayRate": 15.14
     },
@@ -121,7 +121,7 @@
       "Cral_Sort": 2,
       "Degree": "B.S. & Up",
       "Degree_Sort": 3,
-      "Years": "Y ? 4",
+      "Years": "Y ≥ 4",
       "Years_Sort": 5,
       "PayRate": 15.56
     },
@@ -139,7 +139,7 @@
       "Cral_Sort": 3,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "2 ? Y < 4",
+      "Years": "2 ≤ Y < 4",
       "Years_Sort": 3,
       "PayRate": 14.71
     },
@@ -148,7 +148,7 @@
       "Cral_Sort": 3,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "4 ? Y < 6",
+      "Years": "4 ≤ Y < 6",
       "Years_Sort": 4,
       "PayRate": 15.14
     },
@@ -157,7 +157,7 @@
       "Cral_Sort": 3,
       "Degree": "In Progress",
       "Degree_Sort": 1,
-      "Years": "Y ? 6",
+      "Years": "Y ≥ 6",
       "Years_Sort": 6,
       "PayRate": 15.56
     },
@@ -175,7 +175,7 @@
       "Cral_Sort": 3,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "2 ? Y < 4",
+      "Years": "2 ≤ Y < 4",
       "Years_Sort": 3,
       "PayRate": 15.14
     },
@@ -184,7 +184,7 @@
       "Cral_Sort": 3,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "Y ? 4",
+      "Years": "Y ≥ 4",
       "Years_Sort": 5,
       "PayRate": 15.56
     },
@@ -202,7 +202,7 @@
       "Cral_Sort": 3,
       "Degree": "B.S. & Up",
       "Degree_Sort": 3,
-      "Years": "Y ? 2",
+      "Years": "Y ≥ 2",
       "Years_Sort": 2,
       "PayRate": 15.56
     },
@@ -220,7 +220,7 @@
       "Cral_Sort": 4,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "2 ? Y < 4",
+      "Years": "2 ≤ Y < 4",
       "Years_Sort": 3,
       "PayRate": 16.65
     },
@@ -229,7 +229,7 @@
       "Cral_Sort": 4,
       "Degree": "A.S.",
       "Degree_Sort": 2,
-      "Years": "Y ? 4",
+      "Years": "Y ≥ 4",
       "Years_Sort": 5,
       "PayRate": 17.11
     },
@@ -247,7 +247,7 @@
       "Cral_Sort": 4,
       "Degree": "B.S. & Up",
       "Degree_Sort": 3,
-      "Years": "Y ? 2",
+      "Years": "Y ≥ 2",
       "Years_Sort": 2,
       "PayRate": 17.11
     }
