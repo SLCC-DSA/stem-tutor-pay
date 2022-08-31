@@ -1,37 +1,11 @@
-.body {
-  font-family: Verdana, Arial,Helvetica, sans-serif;
-}
 .btn-sm {
-    width: 50%;
-    cursor: pointer;
-    color: white;
+  width: 50%
+}
+@media (max-width: 800px) {
+  .btn-sm {
+    width: 80%;
   }
-  @media (max-width: 800px) {
-    .btn-sm {
-      width: 80%;
-    }
-  }
+}
 .label {
   display: none;
-}
-.slcc1 {
-  background-color: #0078c8;
-}
-.slcc2 {
-  background-color: #ffce00;
-}
-.slcc3 {
-  background-color: #00abe1;
-}
-.active {
-  background-color: #003865;
-}
-.slcc1-font {
-  color: #0078c8;
-}
-input:disabled,
-input[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
 }
