@@ -14,8 +14,8 @@
 
 ```mermaid
 graph TD;
-    Excel File --> CSV File;
-    CSV File --> JSON File;
+    Excel File-->CSV File;
+    CSV File-->JSON File;
     JSON File-->Javascript_Fetch;
     Javascript_Fetch-->JSON;
     JSON-->Filtered;
